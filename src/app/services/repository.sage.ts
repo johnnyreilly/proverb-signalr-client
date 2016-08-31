@@ -58,7 +58,7 @@ export class RepositorySageService {
 
         return this.common.$q<Sage>((resolve, reject) => {
             this.connectionService.connection.start().done(() => {
-                this.proxy.invoke("Get", { id }).then((data: Sage) => {
+                this.proxy.invoke("Get", id).then((data: Sage) => {
                     sage = data;
                     sage.dateOfBirth = this.moment(sage.dateOfBirth).toDate();
                     this.cache.set(sage.id, sage);
@@ -72,7 +72,7 @@ export class RepositorySageService {
     remove(id: number) {
         return this.common.$q<void>((resolve, reject) => {
             this.connectionService.connection.start().done(() => {
-                this.proxy.invoke("Remove", { id })
+                this.proxy.invoke("Remove", id)
                     .then(data => {
                         this.log("Sage [id: " + id + "] removed");
                         resolve(data);
@@ -85,7 +85,7 @@ export class RepositorySageService {
     save(sage: Sage) {
         return this.common.$q<SaveResult>((resolve, reject) => {
             this.connectionService.connection.start().done(() => {
-                this.proxy.invoke("Save", { sage })
+                this.proxy.invoke("Save", sage)
                     .then((saveResult: SaveResult) => {
                         this.log(`Sage ${ saveResult.isSaved ? `[id: ${ saveResult.savedId }] saved` : "save failed" }`);
                         resolve(saveResult);

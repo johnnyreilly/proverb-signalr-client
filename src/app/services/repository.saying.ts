@@ -80,7 +80,7 @@ export class RepositorySayingService {
 
         return this.common.$q<Saying>((resolve, reject) => {
             this.connectionService.connection.start().done(() => {
-                this.proxy.invoke("Get", { id }).then((data: Saying) => {
+                this.proxy.invoke("Get", id).then((data: Saying) => {
                     saying = data;
                     this.cache.set(saying.id, saying);
                     this.log("Saying [id: " + saying.id + "] loaded");
@@ -93,7 +93,7 @@ export class RepositorySayingService {
     remove(id: number) {
         return this.common.$q<void>((resolve, reject) => {
             this.connectionService.connection.start().done(() => {
-                this.proxy.invoke("Remove", { id })
+                this.proxy.invoke("Remove", id)
                     .then(data => {
                         this.log("Saying [id: " + id + "] removed");
                         resolve(data);
@@ -106,7 +106,7 @@ export class RepositorySayingService {
     save(saying: Saying) {
         return this.common.$q<SaveResult>((resolve, reject) => {
             this.connectionService.connection.start().done(() => {
-                this.proxy.invoke("Save", { saying })
+                this.proxy.invoke("Save", saying)
                     .then((saveResult: SaveResult) => {
                         this.log(`Saying ${ saveResult.isSaved ? `[id: ${ saveResult.savedId }] saved` : "save failed" }`);
                         resolve(saveResult);
